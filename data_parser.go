@@ -7,7 +7,6 @@ import (
 	"os"
 	"bytes"
 	"encoding/json"
-	"github.com/pkg/errors"
 	"fmt"
 )
 
@@ -73,7 +72,8 @@ func Data_SheetParse(rows [][]string, sheet string)(data  []interface{}, err err
 }
 
 //单个cell解析
-func Data_CellParse(meta *DataMeta, value string)(cell interface{}, err error) {
+func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
+	var err error
 	switch meta.DataType { //标量逗号分隔
 	case "int32", "uint32":
 		if value == "" {
@@ -81,6 +81,9 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}, err error) {
 			return
 		}
 		cell, err = strconv.ParseInt(value, 10, 64)
+		if err != nil {
+			panic(err)
+		}
 	case "string":
 		cell = value
 	case "float32","float64","float":
@@ -89,47 +92,51 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}, err error) {
 			return
 		}
 		cell, err = strconv.ParseFloat(value, 64)
+		if err != nil {
+			panic(err)
+		}
 	case "bool":
 		if value == "" {
 			cell = false
 			return
 		}
 		cell, err = strconv.ParseBool(value)
+		if err != nil {
+			panic(err)
+		}
 	default:
-		err = errors.New(fmt.Sprintf("未识别的cell类型 %s", meta.DataType))
+		panic(fmt.Sprintf("未识别的cell类型 %s", meta.DataType))
 	}
 
 	return
 }
 
 //解析optional_struct
-func Data_StructParse(rows []string, metaSlice []*DataMeta)(data map[string]interface{}, err error)  {
+func Data_StructParse(rows []string, metaSlice []*DataMeta)(data map[string]interface{})  {
 	data = make(map[string]interface{})
 	fmt.Printf("解析结构体 rows len:%d  metaSlice len:%d \n", len(rows), len(metaSlice))
 	for k, v := range  rows {
 		if meta := metaSlice[k]; meta != nil {
 			if meta.NameType == "repeated" {
-				splits := strings.Split(v, ";")
 				var subItems []interface{}
-				for   _, v := range splits{
-					var item interface{}
-					item, err = Data_CellParse(meta, v)
-					if err != nil {
-						panic(err)
-					}
 
-					subItems = append(subItems, item)
+				if v != "" {
+					splits := strings.Split(v, ";")
+
+					for   _, v := range splits{
+						var item interface{}
+						item = Data_CellParse(meta, v)
+
+						subItems = append(subItems, item)
+					}
 				}
 
 				data[meta.Name] = subItems
 			}else{
-				data[meta.Name], err = Data_CellParse(meta, v)
-				if err != nil {
-					panic(err)
-				}
+				data[meta.Name] = Data_CellParse(meta, v)
 			}
 		}else{
-			return nil, errors.New("meta undefined")
+			panic("meta undefined")
 		}
 	}
 
@@ -138,7 +145,7 @@ func Data_StructParse(rows []string, metaSlice []*DataMeta)(data map[string]inte
 
 
 //解析repeated数据
-func Data_RepeatedParse(row []string, metaList []*DataMeta)(slice []interface{}, offset int, key string, err error) {
+func Data_RepeatedParse(row []string, metaList []*DataMeta)(slice []interface{}, offset int, key string) {
 	if repeatedTimes, err := strconv.ParseInt(metaList[0].DataType, 10 ,64); err == nil {//数字型，表名后面接结构体
 		key = metaList[1].Name
 		fmt.Printf("解析repeated 重复元素数量：%d  ", repeatedTimes)
@@ -154,10 +161,7 @@ func Data_RepeatedParse(row []string, metaList []*DataMeta)(slice []interface{},
 			start :=   t * (structPropertyNum+1) + 2
 			end :=  (t + 1) * (structPropertyNum+1)
 			fmt.Printf("t:%d   start:%d  end:%d row[start]:%s metaList[start]:%v ", t, start, end, row[start], metaList[start])
-			item, err := Data_StructParse(row[start:end+1], metaList[start:end+1])
-			if err != nil {
-				panic(err)
-			}
+			item := Data_StructParse(row[start:end+1], metaList[start:end+1])
 
 			slice = append(slice, item)
 		}
@@ -167,15 +171,16 @@ func Data_RepeatedParse(row []string, metaList []*DataMeta)(slice []interface{},
 		fmt.Printf("列偏移量：%d \n", offset)
 	}else{//标量，";"分隔
 		key = metaList[0].Name
+
+		if row[0] == "" {
+			return
+		}
+
 		subItems := strings.Split(row[0], ";")
 		fmt.Printf("解析repeated ;分隔 重复元素数量：%d\n", len(subItems))
 
 		for _, si := range subItems {
-			r, e := Data_CellParse(metaList[0], si)
-			if e != nil {
-				panic(e)
-			}
-
+			r := Data_CellParse(metaList[0], si)
 			slice = append(slice, r)
 		}
 	}
@@ -188,16 +193,11 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int)(item map[s
 	item = make(map[string]interface{})
 
 	for c := 1; c < columnNum;c++ {
-		fmt.Printf("c-->%d column %v cell:%s\n ", c, metaList[c], row[c])
+		fmt.Printf("c-->%d column %+v cell:%s\n ", c, metaList[c], row[c])
 
 		meta :=  metaList[c]
 		//不合法列，超出表头
 		if meta == nil || (meta.Name == "" && meta.DataType == "") {
-			continue
-		}
-
-		//空值
-		if row[c] == "" {
 			continue
 		}
 
@@ -207,34 +207,29 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int)(item map[s
 			var offset int
 			var key string
 
-			slice, offset, key, err = Data_RepeatedParse(row[c:], metaList[c:])
-			if err != nil {
-				return
-			}
+			slice, offset, key = Data_RepeatedParse(row[c:], metaList[c:])
+
 			c += offset
 			item[key] = slice
 		case "optional_struct":
+			fmt.Println("optional_struct_case")
 			var structPropertyNum int
-			structPropertyNum, err = strconv.Atoi(metaList[1].DataType)
+			structPropertyNum, err = strconv.Atoi(metaList[c].DataType)
 			if err != nil {
-				return
+				panic(err)
 			}
 
-			end := c + structPropertyNum
+			end := c + structPropertyNum + 1
 			var embeddedStruct map[string]interface{}
-			embeddedStruct,  err = Data_StructParse(row[c:end], metaList[c:end])
-			if err != nil {
-				return
-			}
+			embeddedStruct = Data_StructParse(row[c+1:end], metaList[c+1:end])
 
+			offset := structPropertyNum + 1
+			c += offset
 			item[meta.Name] = embeddedStruct
+			fmt.Printf("embeddedStruct:%v 偏移量%d\n", embeddedStruct, offset)
 		case "required", "optional"://required, optional
 			var scalar interface{}
-			scalar, err = Data_CellParse(meta, row[c])
-			if err != nil {
-				return
-			}
-
+			scalar = Data_CellParse(meta, row[c])
 			item[meta.Name] = scalar
 		default:
 			fmt.Println("空列")

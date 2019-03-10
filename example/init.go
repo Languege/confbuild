@@ -10,7 +10,7 @@ func init() {
 
 	viper.SetConfigName("ConfData") // name of config file (without extension)
 	viper.SetConfigType("json")
-	viper.AddConfigPath("./../")
+	viper.AddConfigPath("./")
 
 
 	err := viper.ReadInConfig() // Find and read the config file

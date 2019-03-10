@@ -2,13 +2,30 @@
 	"ChefBasic": [
 		{
 			"DishTypeScore1": 10,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
 			"DishTypeScore2": 11,
+			"DishTypeScore20": 0,
 			"DishTypeScore3": 12,
 			"DishTypeScore4": 13,
+			"DishTypeScore5": 0,
+			"DishTypeScore6": 0,
+			"DishTypeScore7": 0,
+			"DishTypeScore8": 0,
+			"DishTypeScore9": 0,
 			"InitLevel": 1,
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 50,
+			"Skills": null,
 			"Speed": 10,
 			"TempID": 1,
 			"UnlockNeedCustomer": [
@@ -19,14 +36,31 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
 			"DishTypeScore2": 10,
+			"DishTypeScore20": 0,
 			"DishTypeScore3": 11,
 			"DishTypeScore4": 12,
 			"DishTypeScore5": 13,
+			"DishTypeScore6": 0,
+			"DishTypeScore7": 0,
+			"DishTypeScore8": 0,
+			"DishTypeScore9": 0,
 			"InitLevel": 1,
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 53,
+			"Skills": null,
 			"Speed": 11,
 			"TempID": 2,
 			"UnlockNeedCustomer": [
@@ -37,14 +71,31 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
+			"DishTypeScore2": 0,
+			"DishTypeScore20": 0,
 			"DishTypeScore3": 10,
 			"DishTypeScore4": 11,
 			"DishTypeScore5": 12,
 			"DishTypeScore6": 13,
+			"DishTypeScore7": 0,
+			"DishTypeScore8": 0,
+			"DishTypeScore9": 0,
 			"InitLevel": 1,
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 56,
+			"Skills": null,
 			"Speed": 12,
 			"TempID": 3,
 			"UnlockNeedCustomer": [
@@ -55,14 +106,31 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
+			"DishTypeScore2": 0,
+			"DishTypeScore20": 0,
+			"DishTypeScore3": 0,
 			"DishTypeScore4": 10,
 			"DishTypeScore5": 11,
 			"DishTypeScore6": 12,
 			"DishTypeScore7": 13,
+			"DishTypeScore8": 0,
+			"DishTypeScore9": 0,
 			"InitLevel": 1,
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 60,
+			"Skills": null,
 			"Speed": 13,
 			"TempID": 4,
 			"UnlockNeedCustomer": [
@@ -73,14 +141,31 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
+			"DishTypeScore2": 0,
+			"DishTypeScore20": 0,
+			"DishTypeScore3": 0,
+			"DishTypeScore4": 0,
 			"DishTypeScore5": 10,
 			"DishTypeScore6": 11,
 			"DishTypeScore7": 12,
 			"DishTypeScore8": 13,
+			"DishTypeScore9": 0,
 			"InitLevel": 1,
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 63,
+			"Skills": null,
 			"Speed": 14,
 			"TempID": 5,
 			"UnlockNeedCustomer": [
@@ -91,6 +176,22 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
+			"DishTypeScore10": 0,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
+			"DishTypeScore2": 0,
+			"DishTypeScore20": 0,
+			"DishTypeScore3": 0,
+			"DishTypeScore4": 0,
+			"DishTypeScore5": 0,
 			"DishTypeScore6": 10,
 			"DishTypeScore7": 11,
 			"DishTypeScore8": 12,
@@ -99,6 +200,7 @@
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 67,
+			"Skills": null,
 			"Speed": 15,
 			"TempID": 6,
 			"UnlockNeedCustomer": [
@@ -109,7 +211,23 @@
 			]
 		},
 		{
+			"DishTypeScore1": 0,
 			"DishTypeScore10": 13,
+			"DishTypeScore11": 0,
+			"DishTypeScore12": 0,
+			"DishTypeScore13": 0,
+			"DishTypeScore14": 0,
+			"DishTypeScore15": 0,
+			"DishTypeScore16": 0,
+			"DishTypeScore17": 0,
+			"DishTypeScore18": 0,
+			"DishTypeScore19": 0,
+			"DishTypeScore2": 0,
+			"DishTypeScore20": 0,
+			"DishTypeScore3": 0,
+			"DishTypeScore4": 0,
+			"DishTypeScore5": 0,
+			"DishTypeScore6": 0,
 			"DishTypeScore7": 10,
 			"DishTypeScore8": 11,
 			"DishTypeScore9": 12,
@@ -117,6 +235,7 @@
 			"InitStage": 1,
 			"InitStar": 0,
 			"Score": 71,
+			"Skills": null,
 			"Speed": 16,
 			"TempID": 7,
 			"UnlockNeedCustomer": [
@@ -131,11 +250,14 @@
 		{
 			"AddCoinPro": 500,
 			"Coin": 500,
-			"Num": [
-				1,
-				2
-			],
 			"TempID": 1,
+			"UpLevelData": {
+				"Num": [
+					1,
+					2
+				],
+				"TempID": 0
+			},
 			"UpStarData": [
 				{
 					"Num": 10,
@@ -158,11 +280,14 @@
 		{
 			"AddCoinPro": 1000,
 			"Coin": 600,
-			"Num": [
-				1,
-				2
-			],
 			"TempID": 2,
+			"UpLevelData": {
+				"Num": [
+					1,
+					2
+				],
+				"TempID": 0
+			},
 			"UpStarData": [
 				{
 					"Num": 10,
@@ -185,11 +310,14 @@
 		{
 			"AddCoinPro": 1500,
 			"Coin": 700,
-			"Num": [
-				1,
-				2
-			],
 			"TempID": 3,
+			"UpLevelData": {
+				"Num": [
+					1,
+					2
+				],
+				"TempID": 0
+			},
 			"UpStarData": [
 				{
 					"Num": 10,
@@ -213,6 +341,10 @@
 			"AddCoinPro": 2000,
 			"Coin": 800,
 			"TempID": 4,
+			"UpLevelData": {
+				"Num": null,
+				"TempID": 0
+			},
 			"UpStarData": [
 				{
 					"Num": 10,
