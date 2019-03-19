@@ -20,6 +20,7 @@ func UpdateConfAll() {
 
 
 type TableLevelMaterial struct { 
+	Comment	string   // optional 服务端本地化  
 	TempID	uint32   // required 模板ID  
 	Coin	int32   // optional 升级消耗金币  
 	AddCoinPro	int32   // optional 金币加成（千分比）  
@@ -120,6 +121,7 @@ func TableLevelMaterial_ListRange(f func(k uint32, v *TableLevelMaterial) bool) 
 
 
 type ChefBasic struct { 
+	Comment	string   // optional 服务端本地化  
 	TempID	uint32   // required 模板ID  
 	InitStar	int32   // optional 初始星级  
 	InitStage	int32   // optional 初始段位  

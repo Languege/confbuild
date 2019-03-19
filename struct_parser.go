@@ -95,7 +95,10 @@ type StructPkg struct {
 
 //结构体描述解析 对应一张表
 func StructDescParse(metas []*DataMeta, name string) (desc *StructDesc){
-	desc = &StructDesc{Name:name}
+	desc = &StructDesc{
+		Name:name,
+		Field:[]*StructMeta{{"Comment", "optional", "string","服务端本地化", false, nil}},
+	}
 
 	for i := 1; i < len(metas); i++ {
 		m := metas[i]

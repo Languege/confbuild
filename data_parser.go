@@ -191,6 +191,7 @@ func Data_RepeatedParse(row []string, metaList []*DataMeta)(slice []interface{},
 //一行数据解析
 func Data_RowParse(row []string, metaList []*DataMeta, columnNum int)(item map[string]interface{}, err error)  {
 	item = make(map[string]interface{})
+	item["Comment"] = row[0]
 
 	for c := 1; c < columnNum;c++ {
 		fmt.Printf("c-->%d column %+v cell:%s\n ", c, metaList[c], row[c])

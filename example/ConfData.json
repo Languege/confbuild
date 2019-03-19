@@ -1,6 +1,7 @@
 {
 	"ChefBasic": [
 		{
+			"Comment": "厨师1",
 			"DishTypeScore1": 10,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -36,6 +37,7 @@
 			]
 		},
 		{
+			"Comment": "厨师2",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -71,6 +73,7 @@
 			]
 		},
 		{
+			"Comment": "厨师3",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -106,6 +109,7 @@
 			]
 		},
 		{
+			"Comment": "厨师4",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -141,6 +145,7 @@
 			]
 		},
 		{
+			"Comment": "厨师5",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -176,6 +181,7 @@
 			]
 		},
 		{
+			"Comment": "厨师6",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 0,
 			"DishTypeScore11": 0,
@@ -211,6 +217,7 @@
 			]
 		},
 		{
+			"Comment": "厨师7",
 			"DishTypeScore1": 0,
 			"DishTypeScore10": 13,
 			"DishTypeScore11": 0,
@@ -250,6 +257,7 @@
 		{
 			"AddCoinPro": 500,
 			"Coin": 500,
+			"Comment": "等级1",
 			"TempID": 1,
 			"UpLevelData": {
 				"Num": [
@@ -280,6 +288,7 @@
 		{
 			"AddCoinPro": 1000,
 			"Coin": 600,
+			"Comment": "等级2",
 			"TempID": 2,
 			"UpLevelData": {
 				"Num": [
@@ -310,6 +319,7 @@
 		{
 			"AddCoinPro": 1500,
 			"Coin": 700,
+			"Comment": "等级3",
 			"TempID": 3,
 			"UpLevelData": {
 				"Num": [
@@ -340,6 +350,7 @@
 		{
 			"AddCoinPro": 2000,
 			"Coin": 800,
+			"Comment": "等级4",
 			"TempID": 4,
 			"UpLevelData": {
 				"Num": null,
