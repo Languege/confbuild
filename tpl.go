@@ -8,7 +8,6 @@ const tpl = `
 package {{.Name}}
 import(
 	"github.com/spf13/viper"
-	"github.com/astaxie/beego/logs"
 	"sync"
 	"errors"
 	"encoding/json"

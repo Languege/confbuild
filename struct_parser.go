@@ -101,12 +101,16 @@ func StructDescParse(metas []*DataMeta, name string) (desc *StructDesc){
 	}
 
 	for i := 1; i < len(metas); i++ {
+		fmt.Printf("i:%d m:%+v\n", i, metas[i])
 		m := metas[i]
 		sm := &StructMeta{
 			Name:m.Name,
 			NameType:m.NameType,
 			DataType:m.DataType,
-			Comment:strings.Replace(m.Comment, "\n", " ", -1),
+		}
+
+		if m.Comment != "" {
+			sm.Comment = strings.Replace(m.Comment, "\n", " ", -1)
 		}
 
 		switch m.NameType {
@@ -162,6 +166,7 @@ func Struct_Print(desc *StructDesc) {
 
 //单表解析
 func Struct_SheetParse(rows [][]string, sheet string) *StructDesc{
+	fmt.Printf("Parsing Sheet %s ...\n", sheet)
 	columnNum := len(rows[0])
 
 	//元数据列表

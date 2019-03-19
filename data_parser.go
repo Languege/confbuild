@@ -75,7 +75,7 @@ func Data_SheetParse(rows [][]string, sheet string)(data  []interface{}, err err
 func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
 	var err error
 	switch meta.DataType { //标量逗号分隔
-	case "int32", "uint32":
+	case "int32", "uint32","uint64","int64":
 		if value == "" {
 			cell = 0
 			return
