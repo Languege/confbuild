@@ -104,6 +104,8 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
 		if err != nil {
 			panic(err)
 		}
+	case "bytes":
+		cell = []byte(value)
 	default:
 		panic(fmt.Sprintf("未识别的cell类型 %s", meta.DataType))
 	}

@@ -57,6 +57,8 @@ func init(){
 		if nameType == "repeated" {
 			if dataType == "int32" || dataType == "uint32" || dataType == "int64" || dataType == "uint64" || dataType == "string" {
 				return "[]" + dataType
+			}else if dataType == "bytes"{
+				return "[]byte"
 			}else{
 				return "[]struct"
 			}
@@ -65,6 +67,8 @@ func init(){
 		}else{
 			if dataType == "int32" || dataType == "uint32" || dataType == "int64" || dataType == "uint64" || dataType == "string"{
 				return dataType
+			}else if dataType == "bytes"{
+				return "[]byte"
 			}else{
 				return "struct"
 			}
