@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"strings"
-	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
 var sheets,excel, pkg string

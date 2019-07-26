@@ -21,6 +21,21 @@ func UpdateConfAll() {
 {{end}}
 }
 
+var ErrTableNotExit = errors.New("config table not define")
+
+func UpdateConf(table string) error {
+	switch table {
+	{{range .List}}case "{{.Name}}":
+		update{{.Name}}List()
+	{{end}}
+	default:
+		return ErrTableNotExit
+	}
+
+	return nil
+}
+
+
 {{range .List}}
 type {{.Name}} struct { {{range .Field}}
 	{{.Name}}	{{NameTypeFunc .}}  {{if .IsAnonymStruct}} { {{range .AnonymStruct.Field}}

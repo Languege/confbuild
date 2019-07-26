@@ -1,7 +1,6 @@
 
 package example
-
-import (
+import(
 	"github.com/spf13/viper"
 	"sync"
 	"errors"
@@ -17,6 +16,23 @@ func UpdateConfAll() {
 	ChefBasic_ListUpdate()
 
 }
+
+var ErrTableNotExit = errors.New("config table not define")
+
+func UpdateConf(table string) error {
+	switch table {
+	case "TableLevelMaterial":
+		updateTableLevelMaterialList()
+	case "ChefBasic":
+		updateChefBasicList()
+	
+	default:
+		return ErrTableNotExit
+	}
+
+	return nil
+}
+
 
 
 type TableLevelMaterial struct { 

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/360EntSecGroup-Skylar/excelize"
 	"strings"
 	"fmt"
 	"text/template"
 	"strconv"
 	"encoding/json"
 	"os"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
 var funcMap = template.FuncMap{}
@@ -245,8 +245,8 @@ func  Struct_OptionalStructParse(metas []*DataMeta) (desc *StructDesc, offset in
 func Struct_Parse(sheetSlice []string, xlsx *excelize.File) {
 	sdlist := []*StructDesc{}
 	for _, sheet := range sheetSlice {
-		rows := xlsx.GetRows(sheet)
-		if len(rows) <= 0 {
+		rows, err := xlsx.GetRows(sheet)
+		if len(rows) <= 0 || err != nil {
 			continue
 		}
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 	"strings"
 	"strconv"
 	"os"
@@ -246,9 +246,9 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int)(item map[s
 func Data_Parse(sheetSlice []string, xlsx *excelize.File) {
 	mapData := make(map[string]interface{})
 	for _, sheet := range sheetSlice {
-		rows := xlsx.GetRows(sheet)
-		if len(rows) <= 0 {
-			panic("表不存在或者为空")
+		rows, err := xlsx.GetRows(sheet)
+		if len(rows) <= 0 || err != nil {
+			panic("表不存在或者为空 err:" + err.Error())
 		}
 
 		sheetSlice, err := Data_SheetParse(rows, sheet)
