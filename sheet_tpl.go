@@ -22,7 +22,7 @@ type {{.Name}} struct { {{range .Field}}
 
 
 var(
-	{{.Name}}List = map[{{.PrimaryKey.DataType}}]*{{.Name}}{}
+	i{{.Name}}List = map[{{.PrimaryKey.DataType}}]*{{.Name}}{}
 	i{{.Name}}Mutex 	sync.RWMutex
 	i{{.Name}}Size  uint32
 )
@@ -46,10 +46,10 @@ func {{.Name}}_ListUpdate(){
 	defer i{{.Name}}Mutex.Unlock()
 
 	for _, item := range list {
-		{{.Name}}List[item.TempID] = &item
+		i{{.Name}}List[item.TempID] = &item
 	}
 
-	atomic.StoreUint32(&i{{.Name}}Size, uint32(len({{.Name}}List)))
+	atomic.StoreUint32(&i{{.Name}}Size, uint32(len(i{{.Name}}List)))
 }
 
 //唯一主键查找
@@ -58,7 +58,7 @@ func {{.Name}}_FindByPk(ID {{.PrimaryKey.DataType}}) ({{StrFirstToLower .Name}} 
 	defer i{{.Name}}Mutex.RUnlock()
 
 	var ok bool
-	{{StrFirstToLower .Name}}, ok = {{.Name}}List[ID]
+	{{StrFirstToLower .Name}}, ok = i{{.Name}}List[ID]
 	if ok == false {
 		err = errors.New("Not Data Found")
 		return
@@ -80,7 +80,7 @@ func {{.Name}}_ListAll() map[{{.PrimaryKey.DataType}}]*{{.Name}}{
 
 	m := map[{{.PrimaryKey.DataType}}]*{{.Name}}{}
 
-	for k, v := range {{.Name}}List {
+	for k, v := range i{{.Name}}List {
 		m[k] = v
 	}
 
@@ -93,11 +93,24 @@ func {{.Name}}_ListRange(f func(k {{.PrimaryKey.DataType}}, v *{{.Name}}) bool) 
 	defer i{{.Name}}Mutex.RUnlock()
 
 
-	for k, v := range {{.Name}}List {
+	for k, v := range i{{.Name}}List {
 		flag := f(k, v)
 		if flag == false {
 			return
 		}
 	}
+}
+
+//以下为兼容处理
+func {{.Name}}List() map[{{.PrimaryKey.DataType}}]*{{.Name}}{
+	return {{.Name}}_ListAll()
+}
+
+func FindByPk{{.Name}}(ID {{.PrimaryKey.DataType}}) ({{StrFirstToLower .Name}} *{{.Name}}, err error){
+	return {{.Name}}_FindByPk(ID)
+}
+
+func {{.Name}}Len() uint32 {
+	return {{.Name}}_ListLen()
 }
 `

@@ -25,7 +25,7 @@ type TableLevelMaterial struct {
 
 
 var(
-	TableLevelMaterialList = map[uint32]*TableLevelMaterial{}
+	iTableLevelMaterialList = map[uint32]*TableLevelMaterial{}
 	iTableLevelMaterialMutex 	sync.RWMutex
 	iTableLevelMaterialSize  uint32
 )
@@ -49,10 +49,10 @@ func TableLevelMaterial_ListUpdate(){
 	defer iTableLevelMaterialMutex.Unlock()
 
 	for _, item := range list {
-		TableLevelMaterialList[item.TempID] = &item
+		iTableLevelMaterialList[item.TempID] = &item
 	}
 
-	atomic.StoreUint32(&iTableLevelMaterialSize, uint32(len(TableLevelMaterialList)))
+	atomic.StoreUint32(&iTableLevelMaterialSize, uint32(len(iTableLevelMaterialList)))
 }
 
 //唯一主键查找
@@ -61,7 +61,7 @@ func TableLevelMaterial_FindByPk(ID uint32) (tableLevelMaterial *TableLevelMater
 	defer iTableLevelMaterialMutex.RUnlock()
 
 	var ok bool
-	tableLevelMaterial, ok = TableLevelMaterialList[ID]
+	tableLevelMaterial, ok = iTableLevelMaterialList[ID]
 	if ok == false {
 		err = errors.New("Not Data Found")
 		return
@@ -83,7 +83,7 @@ func TableLevelMaterial_ListAll() map[uint32]*TableLevelMaterial{
 
 	m := map[uint32]*TableLevelMaterial{}
 
-	for k, v := range TableLevelMaterialList {
+	for k, v := range iTableLevelMaterialList {
 		m[k] = v
 	}
 
@@ -96,10 +96,23 @@ func TableLevelMaterial_ListRange(f func(k uint32, v *TableLevelMaterial) bool) 
 	defer iTableLevelMaterialMutex.RUnlock()
 
 
-	for k, v := range TableLevelMaterialList {
+	for k, v := range iTableLevelMaterialList {
 		flag := f(k, v)
 		if flag == false {
 			return
 		}
 	}
+}
+
+//以下为兼容处理
+func TableLevelMaterialList() map[uint32]*TableLevelMaterial{
+	return TableLevelMaterial_ListAll()
+}
+
+func FindByPkTableLevelMaterial(ID uint32) (tableLevelMaterial *TableLevelMaterial, err error){
+	return TableLevelMaterial_FindByPk(ID)
+}
+
+func TableLevelMaterialLen() uint32 {
+	return TableLevelMaterial_ListLen()
 }

@@ -42,7 +42,7 @@ type ChefBasic struct {
 
 
 var(
-	ChefBasicList = map[uint32]*ChefBasic{}
+	iChefBasicList = map[uint32]*ChefBasic{}
 	iChefBasicMutex 	sync.RWMutex
 	iChefBasicSize  uint32
 )
@@ -66,10 +66,10 @@ func ChefBasic_ListUpdate(){
 	defer iChefBasicMutex.Unlock()
 
 	for _, item := range list {
-		ChefBasicList[item.TempID] = &item
+		iChefBasicList[item.TempID] = &item
 	}
 
-	atomic.StoreUint32(&iChefBasicSize, uint32(len(ChefBasicList)))
+	atomic.StoreUint32(&iChefBasicSize, uint32(len(iChefBasicList)))
 }
 
 //唯一主键查找
@@ -78,7 +78,7 @@ func ChefBasic_FindByPk(ID uint32) (chefBasic *ChefBasic, err error){
 	defer iChefBasicMutex.RUnlock()
 
 	var ok bool
-	chefBasic, ok = ChefBasicList[ID]
+	chefBasic, ok = iChefBasicList[ID]
 	if ok == false {
 		err = errors.New("Not Data Found")
 		return
@@ -100,7 +100,7 @@ func ChefBasic_ListAll() map[uint32]*ChefBasic{
 
 	m := map[uint32]*ChefBasic{}
 
-	for k, v := range ChefBasicList {
+	for k, v := range iChefBasicList {
 		m[k] = v
 	}
 
@@ -113,10 +113,23 @@ func ChefBasic_ListRange(f func(k uint32, v *ChefBasic) bool) {
 	defer iChefBasicMutex.RUnlock()
 
 
-	for k, v := range ChefBasicList {
+	for k, v := range iChefBasicList {
 		flag := f(k, v)
 		if flag == false {
 			return
 		}
 	}
+}
+
+//以下为兼容处理
+func ChefBasicList() map[uint32]*ChefBasic{
+	return ChefBasic_ListAll()
+}
+
+func FindByPkChefBasic(ID uint32) (chefBasic *ChefBasic, err error){
+	return ChefBasic_FindByPk(ID)
+}
+
+func ChefBasicLen() uint32 {
+	return ChefBasic_ListLen()
 }
