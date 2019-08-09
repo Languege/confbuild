@@ -29,7 +29,7 @@ var(
 
 //从文件读取数据到内存
 func {{.Name}}_ListUpdate(){
-	data, err := confRedis.SGet("{{.Name}}")
+	data, err := confRedis.HGet(GameConfDataKey, "{{.Name}}")
 	if err != nil {
 		panic(err)
 	}

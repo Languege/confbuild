@@ -32,7 +32,7 @@ var(
 
 //从文件读取数据到内存
 func TableLevelMaterial_ListUpdate(){
-	data, err := confRedis.SGet("TableLevelMaterial")
+	data, err := confRedis.HGet(GameConfDataKey, "TableLevelMaterial")
 	if err != nil {
 		panic(err)
 	}

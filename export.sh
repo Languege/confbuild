@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#go build -o=${GOPATH}/bin/confbuild main.go  struct_parser.go data_parser.go tpl.go sheet_tpl.go
+go build -o=${GOPATH}/bin/confbuild main.go  struct_parser.go data_parser.go tpl.go sheet_tpl.go
 
 
 

@@ -8,6 +8,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
+	"github.com/pkg/errors"
 )
 
 
@@ -105,7 +107,8 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
 		}
 		cell, err = strconv.ParseInt(value, 10, 64)
 		if err != nil {
-			panic(err)
+			log.Printf("err:%v", errors.WithStack(err))
+			cell = 0
 		}
 	case "string":
 		cell = value
@@ -116,7 +119,8 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
 		}
 		cell, err = strconv.ParseFloat(value, 64)
 		if err != nil {
-			panic(err)
+			log.Printf("err:%v", errors.WithStack(err))
+			cell = 0.0
 		}
 	case "bool":
 		if value == "" {
@@ -125,7 +129,8 @@ func Data_CellParse(meta *DataMeta, value string)(cell interface{}) {
 		}
 		cell, err = strconv.ParseBool(value)
 		if err != nil {
-			panic(err)
+			log.Printf("err:%v", errors.WithStack(err))
+			cell = false
 		}
 	case "bytes":
 		cell = []byte(value)
@@ -270,7 +275,7 @@ func Data_Parse(sheetSlice []string, xlsx *excelize.File) {
 	for _, sheet := range sheetSlice {
 		rows, err := xlsx.GetRows(sheet)
 		if len(rows) <= 0 || err != nil {
-			panic("表不存在或者为空 err:" + err.Error())
+			panic(fmt.Sprintf("表%s不存在或者为空 err:%v", sheet,  err))
 		}
 
 		Data_SheetParse(rows, sheet)

@@ -49,7 +49,7 @@ var(
 
 //从文件读取数据到内存
 func ChefBasic_ListUpdate(){
-	data, err := confRedis.SGet("ChefBasic")
+	data, err := confRedis.HGet(GameConfDataKey, "ChefBasic")
 	if err != nil {
 		panic(err)
 	}
