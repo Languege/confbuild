@@ -26,7 +26,7 @@ var ErrTableNotExit = errors.New("config table not define")
 func UpdateConf(table string) error {
 	switch table {
 	{{range .List}}case "{{.Name}}":
-		update{{.Name}}List()
+		{{.Name}}_ListUpdate()
 	{{end}}
 	default:
 		return ErrTableNotExit

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-go install
+go build -o=${GOPATH}/bin/confbuild main.go  struct_parser.go data_parser.go tpl.go
 
 
 

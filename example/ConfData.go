@@ -22,9 +22,9 @@ var ErrTableNotExit = errors.New("config table not define")
 func UpdateConf(table string) error {
 	switch table {
 	case "TableLevelMaterial":
-		updateTableLevelMaterialList()
+		TableLevelMaterial_ListUpdate()
 	case "ChefBasic":
-		updateChefBasicList()
+		ChefBasic_ListUpdate()
 	
 	default:
 		return ErrTableNotExit
