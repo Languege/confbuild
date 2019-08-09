@@ -6,12 +6,13 @@ import (
 	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
-var sheets,excel, pkg string
+var sheets,excel, pkg,outPath string
 
 func init(){
 	flag.StringVar(&sheets, "sheets", "", "-sheets sheets to export, ',' split multiple sheets")
 	flag.StringVar(&excel, "excel", "", "-excel  excel filename to parse")
 	flag.StringVar(&pkg, "package", "", "-package  struct package name")
+	flag.StringVar(&outPath, "outpath", "", "-outpath json data file and go struct file output path")
 }
 /**
  *@author LanguageY++2013

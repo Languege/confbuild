@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"text/template"
 	"strconv"
-	"encoding/json"
 	"os"
 	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
@@ -90,6 +89,7 @@ type StructDesc struct {//结构体描述
 	PrimaryKey *StructMeta
 	Field 	[]*StructMeta
 	PropertyNum	int
+	PkgName 	string //包名
 }
 
 type StructPkg struct {
@@ -102,6 +102,7 @@ func StructDescParse(metas []*DataMeta, name string) (desc *StructDesc){
 	desc = &StructDesc{
 		Name:name,
 		Field:[]*StructMeta{{"Comment", "optional", "string","服务端本地化", false, nil}},
+		PkgName:pkg,
 	}
 
 	for i := 1; i < len(metas); i++ {
@@ -200,10 +201,25 @@ func Struct_SheetParse(rows [][]string, sheet string) *StructDesc{
 	desc := StructDescParse(metaList, sheet)
 
 
-	Struct_Print(desc)
+	//Struct_Print(desc)
+	//
+	//structDescJson, _ := json.Marshal(desc)
+	//fmt.Println(string(structDescJson))
 
-	structDescJson, _ := json.Marshal(desc)
-	fmt.Println(string(structDescJson))
+	outFilename := fmt.Sprintf("%s/%s.go", outPath, sheet)
+
+	outFile, err := os.Create(outFilename)
+	if err != nil {
+		panic(err.Error())
+	}
+
+
+	tmpl, err := template.New("struct_gen").Funcs(funcMap).Parse(sheet_tpl)
+	if err != nil { panic(err) }
+	err = tmpl.Execute(outFile, desc)
+	if err != nil { panic(err) }
+
+	outFile.Close()
 
 	return desc
 }
