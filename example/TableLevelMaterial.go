@@ -48,7 +48,7 @@ func TableLevelMaterial_ListUpdate(){
 	iTableLevelMaterialMutex.Lock()
 	defer iTableLevelMaterialMutex.Unlock()
 
-	for k, _ := range list {
+	for k, item := range list {
 		iTableLevelMaterialList[item.TempID] = &list[k]
 	}
 

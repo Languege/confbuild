@@ -45,7 +45,7 @@ func {{.Name}}_ListUpdate(){
 	i{{.Name}}Mutex.Lock()
 	defer i{{.Name}}Mutex.Unlock()
 
-	for k, _ := range list {
+	for k, item := range list {
 		i{{.Name}}List[item.TempID] = &list[k]
 	}
 

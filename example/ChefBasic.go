@@ -65,7 +65,7 @@ func ChefBasic_ListUpdate(){
 	iChefBasicMutex.Lock()
 	defer iChefBasicMutex.Unlock()
 
-	for k, _ := range list {
+	for k, item := range list {
 		iChefBasicList[item.TempID] = &list[k]
 	}
 
