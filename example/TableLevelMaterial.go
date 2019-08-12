@@ -83,8 +83,8 @@ func TableLevelMaterial_ListAll() map[uint32]*TableLevelMaterial{
 
 	m := map[uint32]*TableLevelMaterial{}
 
-	for k, v := range iTableLevelMaterialList {
-		m[k] = v
+	for k, _ := range iTableLevelMaterialList {
+		m[k] = iTableLevelMaterialList[k]
 	}
 
 	return m
@@ -96,8 +96,8 @@ func TableLevelMaterial_ListRange(f func(k uint32, v *TableLevelMaterial) bool) 
 	defer iTableLevelMaterialMutex.RUnlock()
 
 
-	for k, v := range iTableLevelMaterialList {
-		flag := f(k, v)
+	for k, _ := range iTableLevelMaterialList {
+		flag := f(k, iTableLevelMaterialList[k])
 		if flag == false {
 			return
 		}

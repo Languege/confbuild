@@ -80,8 +80,8 @@ func {{.Name}}_ListAll() map[{{.PrimaryKey.DataType}}]*{{.Name}}{
 
 	m := map[{{.PrimaryKey.DataType}}]*{{.Name}}{}
 
-	for k, v := range i{{.Name}}List {
-		m[k] = v
+	for k, _ := range i{{.Name}}List {
+		m[k] = i{{.Name}}List[k]
 	}
 
 	return m
@@ -93,8 +93,8 @@ func {{.Name}}_ListRange(f func(k {{.PrimaryKey.DataType}}, v *{{.Name}}) bool) 
 	defer i{{.Name}}Mutex.RUnlock()
 
 
-	for k, v := range i{{.Name}}List {
-		flag := f(k, v)
+	for k, _ := range i{{.Name}}List {
+		flag := f(k, i{{.Name}}List[k])
 		if flag == false {
 			return
 		}

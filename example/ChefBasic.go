@@ -100,8 +100,8 @@ func ChefBasic_ListAll() map[uint32]*ChefBasic{
 
 	m := map[uint32]*ChefBasic{}
 
-	for k, v := range iChefBasicList {
-		m[k] = v
+	for k, _ := range iChefBasicList {
+		m[k] = iChefBasicList[k]
 	}
 
 	return m
@@ -113,8 +113,8 @@ func ChefBasic_ListRange(f func(k uint32, v *ChefBasic) bool) {
 	defer iChefBasicMutex.RUnlock()
 
 
-	for k, v := range iChefBasicList {
-		flag := f(k, v)
+	for k, _ := range iChefBasicList {
+		flag := f(k, iChefBasicList[k])
 		if flag == false {
 			return
 		}
