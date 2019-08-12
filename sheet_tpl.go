@@ -45,8 +45,8 @@ func {{.Name}}_ListUpdate(){
 	i{{.Name}}Mutex.Lock()
 	defer i{{.Name}}Mutex.Unlock()
 
-	for _, item := range list {
-		i{{.Name}}List[item.TempID] = &item
+	for k, _ := range list {
+		i{{.Name}}List[item.TempID] = &list[k]
 	}
 
 	atomic.StoreUint32(&i{{.Name}}Size, uint32(len(i{{.Name}}List)))

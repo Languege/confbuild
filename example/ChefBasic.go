@@ -65,8 +65,8 @@ func ChefBasic_ListUpdate(){
 	iChefBasicMutex.Lock()
 	defer iChefBasicMutex.Unlock()
 
-	for _, item := range list {
-		iChefBasicList[item.TempID] = &item
+	for k, _ := range list {
+		iChefBasicList[item.TempID] = &list[k]
 	}
 
 	atomic.StoreUint32(&iChefBasicSize, uint32(len(iChefBasicList)))

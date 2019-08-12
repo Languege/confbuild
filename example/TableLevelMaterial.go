@@ -48,8 +48,8 @@ func TableLevelMaterial_ListUpdate(){
 	iTableLevelMaterialMutex.Lock()
 	defer iTableLevelMaterialMutex.Unlock()
 
-	for _, item := range list {
-		iTableLevelMaterialList[item.TempID] = &item
+	for k, _ := range list {
+		iTableLevelMaterialList[item.TempID] = &list[k]
 	}
 
 	atomic.StoreUint32(&iTableLevelMaterialSize, uint32(len(iTableLevelMaterialList)))
