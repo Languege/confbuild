@@ -272,12 +272,47 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int)(item map[s
 
 
 func Data_Parse(sheetSlice []string, xlsx *excelize.File) {
+	//mapData := make(map[string]interface{})
 	for _, sheet := range sheetSlice {
 		rows, err := xlsx.GetRows(sheet)
 		if len(rows) <= 0 || err != nil {
-			panic(fmt.Sprintf("表%s不存在或者为空 err:%v", sheet,  err))
+			panic("表不存在或者为空 err:" + err.Error())
 		}
 
-		Data_SheetParse(rows, sheet)
+		_, err = Data_SheetParse(rows, sheet)
+		if err != nil {
+			panic(err)
+		}
+
+		//mapData[sheet] = sheetSlice
+
 	}
+
+	//jsonBytes, err := json.Marshal(mapData)
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//
+	//var out bytes.Buffer
+	//err = json.Indent(&out, jsonBytes, "", "\t")
+	//
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//
+	//
+	//strarr := strings.Split(excel, ".")
+	//outFilename := strings.Join(strarr[:len(strarr)-1], ".") + ".json"
+	//
+	//outFile, err := os.Create(outFilename)
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//
+	//_, err = outFile.Write(out.Bytes())
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//
+	//outFile.Close()
 }
