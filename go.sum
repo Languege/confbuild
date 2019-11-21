@@ -2,6 +2,8 @@ github.com/360EntSecGroup-Skylar/excelize/v2 v2.0.1 h1:gnknz1/4RnpL2fZsJzsqsGHgj
 github.com/360EntSecGroup-Skylar/excelize/v2 v2.0.1/go.mod h1:fkN+AZg31J/y9B4AtylxjzzNYetIxi6cElYu/WBUb7g=
 github.com/Languege/redis_wrapper v0.0.0-20190809144657-d83932d93191 h1:3EIeCYoq80K+ICQsfSOEjvg5wA6SFvZrIP+UkgwM8Ss=
 github.com/Languege/redis_wrapper v0.0.0-20190809144657-d83932d93191/go.mod h1:zK6YcNwTcqkIyYx/P1zgNON90wS2DsUmj53wj0TqRgI=
+github.com/Languege/redis_wrapper v1.4.0 h1:nLY5b29glkvvhnqR6dc8M7xqmir7NJqHM3AAhPaKEdM=
+github.com/Languege/redis_wrapper v1.4.0/go.mod h1:1bDqLOPS7J9QJSb1BBvmiO9A8xc1Eu2wl50fmRIbcfs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gomodule/redigo v2.0.0+incompatible h1:K/R+8tc58AaqLkqG2Ol3Qk+DR/TlNuhuh457pBFPtt0=
 github.com/gomodule/redigo v2.0.0+incompatible/go.mod h1:B4C85qUVwatsJoIUNIfCRsp7qO0iAmpGFZ4EELWSbC4=
