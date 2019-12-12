@@ -144,10 +144,17 @@ func Data_CellParse(meta *DataMeta, value string, sheet string)(cell interface{}
 }
 
 //解析optional_struct
-func Data_StructParse(rows []string, metaSlice []*DataMeta, sheet string)(data map[string]interface{})  {
+func Data_StructParse(rows []string, metaSlice []*DataMeta, sheet string)(data map[string]interface{}, allEmpty bool)  {
 	data = make(map[string]interface{})
 	log.Printf("解析结构体 rows len:%d  metaSlice len:%d \n", len(rows), len(metaSlice))
+	allEmpty = true
 	for k, v := range  rows {
+		if strings.Trim(v, " ") != "" {
+			allEmpty = false
+		}else{
+			continue
+		}
+
 		if meta := metaSlice[k]; meta != nil {
 			if meta.NameType == "repeated" {
 				var subItems []interface{}
@@ -155,9 +162,12 @@ func Data_StructParse(rows []string, metaSlice []*DataMeta, sheet string)(data m
 				if v != "" {
 					splits := strings.Split(v, ";")
 
-					for   _, v := range splits{
+					for   _, v2 := range splits{
+						if strings.Trim(v2, " ") == "" {
+							continue
+						}
 						var item interface{}
-						item = Data_CellParse(meta, v, sheet)
+						item = Data_CellParse(meta, v2, sheet)
 
 						subItems = append(subItems, item)
 					}
@@ -193,9 +203,10 @@ func Data_RepeatedParse(row []string, metaList []*DataMeta, sheet string)(slice 
 			start :=   t * (structPropertyNum+1) + 2
 			end :=  (t + 1) * (structPropertyNum+1)
 			log.Printf("t:%d   start:%d  end:%d row[start]:%s metaList[start]:%v ", t, start, end, row[start], metaList[start])
-			item := Data_StructParse(row[start:end+1], metaList[start:end+1], sheet)
-
-			slice = append(slice, item)
+			item, allEmpty := Data_StructParse(row[start:end+1], metaList[start:end+1], sheet)
+			if allEmpty == false {
+				slice = append(slice, item)
+			}
 		}
 
 		offset = (structPropertyNum+1) * int(repeatedTimes)
@@ -212,6 +223,9 @@ func Data_RepeatedParse(row []string, metaList []*DataMeta, sheet string)(slice 
 		log.Printf("解析repeated ;分隔 重复元素数量：%d\n", len(subItems))
 
 		for _, si := range subItems {
+			if strings.Trim(si, " ") == "" {
+				continue
+			}
 			r := Data_CellParse(metaList[0], si, sheet)
 			slice = append(slice, r)
 		}
@@ -253,14 +267,18 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int, sheet stri
 			}
 
 			end := c + structPropertyNum + 1
-			var embeddedStruct map[string]interface{}
-			embeddedStruct = Data_StructParse(row[c+1:end], metaList[c+1:end], sheet)
+			embeddedStruct, allEmpty := Data_StructParse(row[c+1:end], metaList[c+1:end], sheet)
 
 			offset := structPropertyNum + 1
 			c += offset
-			item[meta.Name] = embeddedStruct
+			if allEmpty == false {
+				item[meta.Name] = embeddedStruct
+			}
 			log.Printf("embeddedStruct:%v 偏移量%d\n", embeddedStruct, offset)
 		case "required", "optional"://required, optional
+			if strings.Trim(row[c], " ") == "" {
+				continue
+			}
 			var scalar interface{}
 			scalar = Data_CellParse(meta, row[c], sheet)
 			item[meta.Name] = scalar
