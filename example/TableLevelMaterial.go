@@ -28,6 +28,7 @@ var(
 	iTableLevelMaterialList = map[uint32]*TableLevelMaterial{}
 	iTableLevelMaterialMutex 	sync.RWMutex
 	iTableLevelMaterialSize  uint32
+	iTableLevelMaterialHook	func(list map[uint32]*TableLevelMaterial)
 )
 
 //从文件读取数据到内存
@@ -46,10 +47,15 @@ func TableLevelMaterial_ListUpdate(){
 
 	
 	iTableLevelMaterialMutex.Lock()
-	defer iTableLevelMaterialMutex.Unlock()
-
 	for k, item := range list {
 		iTableLevelMaterialList[item.TempID] = &list[k]
+	}
+	iTableLevelMaterialMutex.Unlock()
+
+	if iTableLevelMaterialHook != nil {
+		iTableLevelMaterialMutex.RLock()
+		iTableLevelMaterialHook(iTableLevelMaterialList)
+		iTableLevelMaterialMutex.RUnlock()
 	}
 
 	atomic.StoreUint32(&iTableLevelMaterialSize, uint32(len(iTableLevelMaterialList)))

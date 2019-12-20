@@ -25,6 +25,7 @@ var(
 	i{{.Name}}List = map[{{.PrimaryKey.DataType}}]*{{.Name}}{}
 	i{{.Name}}Mutex 	sync.RWMutex
 	i{{.Name}}Size  uint32
+	i{{.Name}}Hook	func(list map[{{.PrimaryKey.DataType}}]*{{.Name}})
 )
 
 //从文件读取数据到内存
@@ -43,10 +44,15 @@ func {{.Name}}_ListUpdate(){
 
 	
 	i{{.Name}}Mutex.Lock()
-	defer i{{.Name}}Mutex.Unlock()
-
 	for k, item := range list {
 		i{{.Name}}List[item.TempID] = &list[k]
+	}
+	i{{.Name}}Mutex.Unlock()
+
+	if i{{.Name}}Hook != nil {
+		i{{.Name}}Mutex.RLock()
+		i{{.Name}}Hook(i{{.Name}}List)
+		i{{.Name}}Mutex.RUnlock()
 	}
 
 	atomic.StoreUint32(&i{{.Name}}Size, uint32(len(i{{.Name}}List)))

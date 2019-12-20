@@ -45,6 +45,7 @@ var(
 	iChefBasicList = map[uint32]*ChefBasic{}
 	iChefBasicMutex 	sync.RWMutex
 	iChefBasicSize  uint32
+	iChefBasicHook	func(list map[uint32]*ChefBasic)
 )
 
 //从文件读取数据到内存
@@ -63,10 +64,15 @@ func ChefBasic_ListUpdate(){
 
 	
 	iChefBasicMutex.Lock()
-	defer iChefBasicMutex.Unlock()
-
 	for k, item := range list {
 		iChefBasicList[item.TempID] = &list[k]
+	}
+	iChefBasicMutex.Unlock()
+
+	if iChefBasicHook != nil {
+		iChefBasicMutex.RLock()
+		iChefBasicHook(iChefBasicList)
+		iChefBasicMutex.RUnlock()
 	}
 
 	atomic.StoreUint32(&iChefBasicSize, uint32(len(iChefBasicList)))
