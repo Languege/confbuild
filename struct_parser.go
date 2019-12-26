@@ -57,7 +57,7 @@ func init(){
 			if dataType == "int32" || dataType == "uint32" || dataType == "int64" || dataType == "uint64" || dataType == "string" {
 				return "[]" + dataType
 			}else if dataType == "bytes"{
-				return "[]byte"
+				return "[]string"
 			}else{
 				return "[]struct"
 			}

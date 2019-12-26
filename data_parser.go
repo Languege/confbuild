@@ -135,7 +135,11 @@ func Data_CellParse(meta *DataMeta, value string, sheet string)(cell interface{}
 			cell = false
 		}
 	case "bytes":
-		cell = []byte(value)
+		if meta.NameType == "repeated" {
+			cell = value
+		}else{
+			cell = []byte(value)
+		}
 	default:
 		log.Printf("[Error]未识别的cell类型 %s meta:%v sheet:%s", meta.DataType, meta, sheet)
 	}
