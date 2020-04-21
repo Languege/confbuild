@@ -50,6 +50,7 @@ var(
 
 //从文件读取数据到内存
 func ChefBasic_ListUpdate(data []byte){
+
 	list := []ChefBasic{}
 
 	err := json.Unmarshal(data, &list)

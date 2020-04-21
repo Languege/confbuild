@@ -1,17 +1,17 @@
 
 package example
 
-import (
+import(
 	"errors"
-	"io/ioutil"
-	"os"
 	"strings"
-	"fmt"
 	"time"
 	"context"
 	"go.etcd.io/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"log"
+	"io/ioutil"
+	"os"
+	"fmt"
 )
 
 
@@ -23,7 +23,7 @@ func UpdateConf(table string, data []byte) error {
 	case "TableLevelMaterial":
 		TableLevelMaterial_ListUpdate(data)
 	case "ChefBasic":
-		ChefBasic_ListUpdate()
+		ChefBasic_ListUpdate(data)
 	
 	default:
 		return ErrTableNotExit
@@ -32,17 +32,13 @@ func UpdateConf(table string, data []byte) error {
 	return nil
 }
 
-var(
-	GameConfDataKey = "GameConfData"
-)
-
 type Configure struct {
 	Path 		string
 	EtcdEndPoints	[]string
 	PrevKey 		string
 }
 
-func Start(conf Configure) {
+func Start(conf Configure, rebuild bool) {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   conf.EtcdEndPoints,
 		DialTimeout: 5 * time.Second,
@@ -52,32 +48,34 @@ func Start(conf Configure) {
 	}
 
 
-	//加载文件数据至etcd
-	dir, err := ioutil.ReadDir(conf.Path)
-	if err != nil {
-		panic(err)
-	}
-	PthSep := string(os.PathSeparator)
-	for _, fi := range dir {
-		if fi.IsDir() { // 忽略目录
-			continue
+	if rebuild {
+		//加载文件数据至etcd
+		dir, err := ioutil.ReadDir(conf.Path)
+		if err != nil {
+			panic(err)
 		}
-		if strings.HasSuffix(fi.Name(), "json") { //匹配文件
-			content, err := ioutil.ReadFile(conf.Path + PthSep + fi.Name())
-			if err != nil {
-				panic(content)
+		PthSep := string(os.PathSeparator)
+		for _, fi := range dir {
+			if fi.IsDir() { // 忽略目录
+				continue
 			}
+			if strings.HasSuffix(fi.Name(), "json") { //匹配文件
+				content, err := ioutil.ReadFile(conf.Path + PthSep + fi.Name())
+				if err != nil {
+					panic(content)
+				}
 
-			table := strings.Split(fi.Name(), ".")[0]
-			if table == "" {
-				panic(errors.New(fmt.Sprintf("file name %s get failed", fi.Name())))
-			}
+				table := strings.Split(fi.Name(), ".")[0]
+				if table == "" {
+					panic(errors.New(fmt.Sprintf("file name %s get failed", fi.Name())))
+				}
 
-			key := fmt.Sprintf("%s/%s", conf.PrevKey, table)
+				key := fmt.Sprintf("%s/%s", conf.PrevKey, table)
 
-			_, err = cli.Put(context.Background(), key, string(content))
-			if err != nil {
-				panic(err)
+				_, err = cli.Put(context.Background(), key, string(content))
+				if err != nil {
+					panic(err)
+				}
 			}
 		}
 	}
@@ -99,6 +97,7 @@ func Start(conf Configure) {
 		}
 	}
 
+
 	//watcher
 	go func() {
 		rch := cli.Watch(context.Background(), conf.PrevKey, clientv3.WithPrefix())
@@ -107,6 +106,8 @@ func Start(conf Configure) {
 				switch ev.Type {
 				case mvccpb.PUT:
 					log.Printf("PUT Key %+v\n", string(ev.Kv.Key))
+					table := strings.Replace(string(ev.Kv.Key), conf.PrevKey, "", -1)
+					UpdateConf(table, ev.Kv.Value)
 				case mvccpb.DELETE:
 					log.Printf("DELETE Key %+v\n", string(ev.Kv.Key))
 				}

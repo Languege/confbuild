@@ -29,15 +29,11 @@ var(
 )
 
 //从文件读取数据到内存
-func {{.Name}}_ListUpdate(){
-	data, err := confRedis.HGet(GameConfDataKey, "{{.Name}}")
-	if err != nil {
-		panic(err)
-	}
+func {{.Name}}_ListUpdate(data []byte){
 
 	list := []{{.Name}}{}
 
-	err = json.Unmarshal(data, &list)
+	err := json.Unmarshal(data, &list)
 	if err != nil {
 		panic(err)
 	}
