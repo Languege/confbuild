@@ -1,31 +1,27 @@
 
 package example
 
-import(
+import (
 	"errors"
-	"github.com/Languege/redis_wrapper"
 	"io/ioutil"
 	"os"
 	"strings"
 	"fmt"
 	"time"
+	"context"
+	"go.etcd.io/etcd/clientv3"
+	"github.com/coreos/etcd/mvcc/mvccpb"
+	"log"
 )
 
 
-func UpdateConfAll() {
-
-	TableLevelMaterial_ListUpdate()
-
-	ChefBasic_ListUpdate()
-
-}
 
 var ErrTableNotExit = errors.New("config table not define")
 
-func UpdateConf(table string) error {
+func UpdateConf(table string, data []byte) error {
 	switch table {
 	case "TableLevelMaterial":
-		TableLevelMaterial_ListUpdate()
+		TableLevelMaterial_ListUpdate(data)
 	case "ChefBasic":
 		ChefBasic_ListUpdate()
 	
@@ -37,24 +33,26 @@ func UpdateConf(table string) error {
 }
 
 var(
-	confRedis  *redis_wrapper.RedisWrapper
 	GameConfDataKey = "GameConfData"
 )
 
 type Configure struct {
 	Path 		string
-	RedisHost	string
-	RedisPort 	string
-	RedisPassword	string
-	RedisMaxIdle	int
-	RedisIdleTimeout	time.Duration
-	RedisMaxActive 	int
+	EtcdEndPoints	[]string
+	PrevKey 		string
 }
 
 func Start(conf Configure) {
-	//实例化配置表redis
-	confRedis = redis_wrapper.NewRedisWrapper(conf.RedisHost, conf.RedisPort, conf.RedisPassword, conf.RedisMaxIdle, conf.RedisIdleTimeout, conf.RedisMaxActive)
-	//加载文件数据至redis
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   conf.EtcdEndPoints,
+		DialTimeout: 5 * time.Second,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+
+	//加载文件数据至etcd
 	dir, err := ioutil.ReadDir(conf.Path)
 	if err != nil {
 		panic(err)
@@ -75,10 +73,44 @@ func Start(conf Configure) {
 				panic(errors.New(fmt.Sprintf("file name %s get failed", fi.Name())))
 			}
 
-			confRedis.HSet(GameConfDataKey, table, content)
+			key := fmt.Sprintf("%s/%s", conf.PrevKey, table)
+
+			_, err = cli.Put(context.Background(), key, string(content))
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 
-	UpdateConfAll()
+	//get
+	resp, err := cli.Get(context.Background(), conf.PrevKey, clientv3.WithPrefix())
+	if err != nil {
+		panic(err)
+	}
 
+	if resp.Kvs == nil {
+		panic("配置项缺失")
+	}
+
+	for i := range resp.Kvs {
+		if v := resp.Kvs[i].Value;v != nil {
+			table := strings.Replace(string(resp.Kvs[i].Key), conf.PrevKey, "", -1)
+			UpdateConf(table, resp.Kvs[i].Value)
+		}
+	}
+
+	//watcher
+	go func() {
+		rch := cli.Watch(context.Background(), conf.PrevKey, clientv3.WithPrefix())
+		for wresp := range rch {
+			for _, ev := range wresp.Events {
+				switch ev.Type {
+				case mvccpb.PUT:
+					log.Printf("PUT Key %+v\n", string(ev.Kv.Key))
+				case mvccpb.DELETE:
+					log.Printf("DELETE Key %+v\n", string(ev.Kv.Key))
+				}
+			}
+		}
+	}()
 }

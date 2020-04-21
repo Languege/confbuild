@@ -2,7 +2,6 @@ package example
 
 import (
 	"testing"
-	"time"
 )
 
 /**
@@ -11,13 +10,9 @@ import (
  **/
 func TestTableLevelMaterial_FindByPk(t *testing.T) {
 	Start(Configure{
-		"./",
-		"127.0.0.1",
-		"6379",
-		"SjhkHD3J5k6H8SjSbK3SC",
-		1,
-		time.Duration(12) * time.Hour,
-		10,
+		Path:"./",
+		EtcdEndPoints:[]string{"62.234.93.123:2379"},
+		PrevKey: "open.confdata",
 	})
 	m, err := TableLevelMaterial_FindByPk(1)
 	if err != nil {
@@ -29,13 +24,9 @@ func TestTableLevelMaterial_FindByPk(t *testing.T) {
 
 func TestTableLevelMaterial_ListAll(t *testing.T) {
 	Start(Configure{
-		"./",
-		"127.0.0.1",
-		"6379",
-		"SjhkHD3J5k6H8SjSbK3SC",
-		1,
-		time.Duration(12) * time.Hour,
-		10,
+		Path:"./",
+		EtcdEndPoints:[]string{"62.234.93.123:2379"},
+		PrevKey: "open.confdata",
 	})
 	m := TableLevelMaterial_ListAll()
 	if len(m) == 0 {
@@ -47,13 +38,9 @@ func TestTableLevelMaterial_ListAll(t *testing.T) {
 
 func TestTableLevelMaterial_ListRange(t *testing.T) {
 	Start(Configure{
-		"./",
-		"127.0.0.1",
-		"6379",
-		"SjhkHD3J5k6H8SjSbK3SC",
-		1,
-		time.Duration(12) * time.Hour,
-		10,
+		Path:"./",
+		EtcdEndPoints:[]string{"62.234.93.123:2379"},
+		PrevKey: "open.confdata",
 	})
 	TableLevelMaterial_ListRange(func(k uint32, v *TableLevelMaterial) bool {
 		if v == nil {
@@ -67,13 +54,9 @@ func TestTableLevelMaterial_ListRange(t *testing.T) {
 
 func TestTableLevelMaterial_ListLen(t *testing.T) {
 	Start(Configure{
-		"./",
-		"127.0.0.1",
-		"6379",
-		"SjhkHD3J5k6H8SjSbK3SC",
-		1,
-		time.Duration(12) * time.Hour,
-		10,
+		Path:"./",
+		EtcdEndPoints:[]string{"62.234.93.123:2379"},
+		PrevKey: "open.confdata",
 	})
 
 	l := TableLevelMaterial_ListLen()

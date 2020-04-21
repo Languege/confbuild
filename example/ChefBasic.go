@@ -49,15 +49,10 @@ var(
 )
 
 //从文件读取数据到内存
-func ChefBasic_ListUpdate(){
-	data, err := confRedis.HGet(GameConfDataKey, "ChefBasic")
-	if err != nil {
-		panic(err)
-	}
-
+func ChefBasic_ListUpdate(data []byte){
 	list := []ChefBasic{}
 
-	err = json.Unmarshal(data, &list)
+	err := json.Unmarshal(data, &list)
 	if err != nil {
 		panic(err)
 	}
