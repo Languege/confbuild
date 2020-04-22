@@ -18,6 +18,8 @@ import(
 	"io/ioutil"
 	"os"
 	"fmt"
+	"os/signal"
+	"syscall"
 )
 
 
@@ -117,6 +119,17 @@ func Start(conf Configure, rebuild bool) {
 				}
 			}
 		}
+	}()
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+	go func() {
+		<-c
+		if cli != nil {
+			cli.Close()
+		}
+
+		os.Exit(0)
 	}()
 }
 `
