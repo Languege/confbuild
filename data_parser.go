@@ -285,7 +285,13 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int, sheet stri
 			}
 			var scalar interface{}
 			scalar = Data_CellParse(meta, row[c], sheet)
-			item[meta.Name] = scalar
+			//是否存在主键前缀
+			if primaryPrefix != "" {
+				item[meta.Name] = fmt.Sprintf("%s%v", primaryPrefix, scalar)
+			}else{
+				item[meta.Name] = scalar
+			}
+
 		default:
 			log.Println("空列")
 		}

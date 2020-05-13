@@ -1,9 +1,9 @@
 [
 	{
-		"AddCoinPro": 500,
-		"Coin": 500,
+		"AddCoinPro": "open500",
+		"Coin": "open500",
 		"Comment": "等级1",
-		"TempID": 1,
+		"TempID": "open1",
 		"UpLevelData": {
 			"Num": [
 				1,
@@ -18,10 +18,10 @@
 		]
 	},
 	{
-		"AddCoinPro": 1000,
-		"Coin": 600,
+		"AddCoinPro": "open1000",
+		"Coin": "open600",
 		"Comment": "等级2",
-		"TempID": 2,
+		"TempID": "open2",
 		"UpLevelData": {
 			"Num": [
 				1,
@@ -36,10 +36,10 @@
 		]
 	},
 	{
-		"AddCoinPro": 1500,
-		"Coin": 700,
+		"AddCoinPro": "open1500",
+		"Coin": "open700",
 		"Comment": "等级3",
-		"TempID": 3,
+		"TempID": "open3",
 		"UpLevelData": {
 			"Num": [
 				1,
@@ -54,10 +54,10 @@
 		]
 	},
 	{
-		"AddCoinPro": 2000,
-		"Coin": 800,
+		"AddCoinPro": "open2000",
+		"Coin": "open800",
 		"Comment": "等级4",
-		"TempID": 4,
+		"TempID": "open4",
 		"UpStarData": [
 			{
 				"Num": 10,

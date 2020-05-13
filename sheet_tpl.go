@@ -41,7 +41,7 @@ func {{.Name}}_ListUpdate(data []byte){
 	
 	i{{.Name}}Mutex.Lock()
 	for k, item := range list {
-		i{{.Name}}List[item.TempID] = &list[k]
+		i{{.Name}}List[item.{{.PrimaryKey.Name}}] = &list[k]
 	}
 	i{{.Name}}Mutex.Unlock()
 

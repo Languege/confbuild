@@ -10,7 +10,7 @@ import(
 
 type ChefBasic struct { 
 	Comment	string   // optional 服务端本地化  
-	TempID	uint32   // required 模板ID  
+	TempID	string   // required 模板ID  
 	InitStar	int32   // optional 初始星级  
 	InitStage	int32   // optional 初始段位  
 	InitLevel	int32   // optional 初始等级  
@@ -42,10 +42,10 @@ type ChefBasic struct {
 
 
 var(
-	iChefBasicList = map[uint32]*ChefBasic{}
+	iChefBasicList = map[string]*ChefBasic{}
 	iChefBasicMutex 	sync.RWMutex
 	iChefBasicSize  uint32
-	iChefBasicHook	func(list map[uint32]*ChefBasic)
+	iChefBasicHook	func(list map[string]*ChefBasic)
 )
 
 //从文件读取数据到内存
@@ -75,7 +75,7 @@ func ChefBasic_ListUpdate(data []byte){
 }
 
 //唯一主键查找
-func ChefBasic_FindByPk(ID uint32) (chefBasic *ChefBasic, err error){
+func ChefBasic_FindByPk(ID string) (chefBasic *ChefBasic, err error){
 	iChefBasicMutex.RLock()
 	defer iChefBasicMutex.RUnlock()
 
@@ -96,11 +96,11 @@ func ChefBasic_ListLen() uint32 {
 }
 
 //获取完整数据
-func ChefBasic_ListAll() map[uint32]*ChefBasic{
+func ChefBasic_ListAll() map[string]*ChefBasic{
 	iChefBasicMutex.RLock()
 	defer iChefBasicMutex.RUnlock()
 
-	m := map[uint32]*ChefBasic{}
+	m := map[string]*ChefBasic{}
 
 	for k, _ := range iChefBasicList {
 		m[k] = iChefBasicList[k]
@@ -110,7 +110,7 @@ func ChefBasic_ListAll() map[uint32]*ChefBasic{
 }
 
 //自定义处理, 返回false, 终止遍历
-func ChefBasic_ListRange(f func(k uint32, v *ChefBasic) bool) {
+func ChefBasic_ListRange(f func(k string, v *ChefBasic) bool) {
 	iChefBasicMutex.RLock()
 	defer iChefBasicMutex.RUnlock()
 
@@ -124,11 +124,11 @@ func ChefBasic_ListRange(f func(k uint32, v *ChefBasic) bool) {
 }
 
 //以下为兼容处理
-func ChefBasicList() map[uint32]*ChefBasic{
+func ChefBasicList() map[string]*ChefBasic{
 	return ChefBasic_ListAll()
 }
 
-func FindByPkChefBasic(ID uint32) (chefBasic *ChefBasic, err error){
+func FindByPkChefBasic(ID string) (chefBasic *ChefBasic, err error){
 	return ChefBasic_FindByPk(ID)
 }
 

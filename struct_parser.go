@@ -120,6 +120,10 @@ func StructDescParse(metas []*DataMeta, name string) (desc *StructDesc){
 
 		switch m.NameType {
 		case "required":
+			//是否存在主键前缀
+			if primaryPrefix != "" {
+				sm.DataType = "string"
+			}
 			desc.PrimaryKey = sm
 		case "optional_struct":
 			sm.IsAnonymStruct = true
@@ -243,7 +247,7 @@ func  Struct_OptionalStructParse(metas []*DataMeta) (desc *StructDesc, offset in
 				Name:m.Name,
 				NameType:m.NameType,
 				DataType:m.DataType,
-				Comment:m.Comment,
+				Comment:strings.Replace(m.Comment, "\n", " ", -1),
 			}
 
 			desc.Field = append(desc.Field, meta)
