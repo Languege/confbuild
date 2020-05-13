@@ -139,7 +139,7 @@ func StructDescParse(metas []*DataMeta, name string) (desc *StructDesc){
 				//子结构
 				subDesc, offset := Struct_OptionalStructParse(metas[i+1:])
 				//偏移量
-				i += offset * times
+				i += (offset + 1) * times
 				sm.AnonymStruct = subDesc
 				sm.Name = subDesc.Name
 			}
@@ -238,9 +238,9 @@ func  Struct_OptionalStructParse(metas []*DataMeta) (desc *StructDesc, offset in
 
 	desc.PropertyNum = propertyNum
 	desc.Name = metas[0].Name
-	offset = propertyNum + 1
+	offset = propertyNum
 
-	for i := 1; i < offset; i++{
+	for i := 1; i <= offset; i++{
 		m := metas[i]
 		if m.NameType == "optional" || m.NameType == "repeated" {
 			meta := &StructMeta{

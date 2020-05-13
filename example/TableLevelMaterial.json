@@ -1,68 +1,78 @@
 [
 	{
-		"AddCoinPro": "open500",
-		"Coin": "open500",
+		"AddCoinPro": 500,
+		"Coin": 500,
 		"Comment": "等级1",
-		"TempID": "open1",
-		"UpLevelData": {
-			"Num": [
-				1,
-				2
-			]
+		"Num": 10,
+		"TempID": 40001,
+		"Test": {
+			"Num": 10,
+			"TempID": 40001
 		},
-		"UpStarData": [
-			{
-				"Num": 10,
-				"TempID": 40001
-			}
-		]
+		"Test2": {
+			"Num": 10,
+			"TempID": 40001
+		},
+		"UpStarData": {
+			"Num": 10,
+			"TempID": 40001
+		}
 	},
 	{
-		"AddCoinPro": "open1000",
-		"Coin": "open600",
+		"AddCoinPro": 1000,
+		"Coin": 600,
 		"Comment": "等级2",
-		"TempID": "open2",
-		"UpLevelData": {
-			"Num": [
-				1,
-				2
-			]
+		"Num": 10,
+		"TempID": 40001,
+		"Test": {
+			"Num": 10,
+			"TempID": 40001
 		},
-		"UpStarData": [
-			{
-				"Num": 10,
-				"TempID": 40001
-			}
-		]
+		"Test2": {
+			"Num": 10,
+			"TempID": 40001
+		},
+		"UpStarData": {
+			"Num": 10,
+			"TempID": 40001
+		}
 	},
 	{
-		"AddCoinPro": "open1500",
-		"Coin": "open700",
+		"AddCoinPro": 1500,
+		"Coin": 700,
 		"Comment": "等级3",
-		"TempID": "open3",
-		"UpLevelData": {
-			"Num": [
-				1,
-				2
-			]
+		"Num": 10,
+		"TempID": 40001,
+		"Test": {
+			"Num": 10,
+			"TempID": 40001
 		},
-		"UpStarData": [
-			{
-				"Num": 10,
-				"TempID": 40001
-			}
-		]
+		"Test2": {
+			"Num": 10,
+			"TempID": 40001
+		},
+		"UpStarData": {
+			"Num": 10,
+			"TempID": 40001
+		}
 	},
 	{
-		"AddCoinPro": "open2000",
-		"Coin": "open800",
+		"AddCoinPro": 2000,
+		"Coin": 800,
 		"Comment": "等级4",
-		"TempID": "open4",
-		"UpStarData": [
-			{
-				"Num": 10,
-				"TempID": 40001
-			}
-		]
+		"Num": 10,
+		"TempID": 40001,
+		"Test": {
+			"Num": 10,
+			"TempID": 40001
+		},
+		"Test2": {
+			"Num": 10,
+			"TempID": 40001
+		},
+		"UpStarData": {
+			"Num": 10,
+			"TempID": 40001
+		}
 	}
 ]

@@ -286,7 +286,7 @@ func Data_RowParse(row []string, metaList []*DataMeta, columnNum int, sheet stri
 			var scalar interface{}
 			scalar = Data_CellParse(meta, row[c], sheet)
 			//是否存在主键前缀
-			if primaryPrefix != "" {
+			if meta.NameType == "required" && primaryPrefix != "" {
 				item[meta.Name] = fmt.Sprintf("%s%v", primaryPrefix, scalar)
 			}else{
 				item[meta.Name] = scalar

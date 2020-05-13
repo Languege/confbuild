@@ -13,13 +13,17 @@ type TableLevelMaterial struct {
 	TempID	string   // required 模板ID  
 	Coin	int32   // optional 升级消耗金币  
 	AddCoinPro	int32   // optional 金币加成（千分比）  
+	Test	struct   { 
+			 TempID int32 	// optional 物品ID    
+			 Num int32 	// optional 数量    
+	}  
 	UpStarData	[]struct   { 
 			 TempID int32 	// optional 物品ID    
 			 Num int32 	// optional 数量    
 	}  
-	UpLevelData	struct   { 
+	Test2	struct   { 
 			 TempID int32 	// optional 物品ID    
-			 Num []int32 	// repeated 数量    
+			 Num int32 	// optional 数量    
 	}  
 }
 

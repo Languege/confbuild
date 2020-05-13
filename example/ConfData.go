@@ -24,8 +24,6 @@ func UpdateConf(table string, data []byte) error {
 	switch table {
 	case "TableLevelMaterial":
 		TableLevelMaterial_ListUpdate(data)
-	case "ChefBasic":
-		ChefBasic_ListUpdate(data)
 	
 	default:
 		return ErrTableNotExit
